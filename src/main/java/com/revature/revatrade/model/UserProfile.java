@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +27,10 @@ public class UserProfile {
     private String city;
     @Column
     private Integer zipCode;
+    @Column
+    private String profilePic;
+    @Column
+    private String aboutMe;
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 }

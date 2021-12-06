@@ -18,7 +18,7 @@ public class OrderDetails {
     private Integer orderDetailsId;
     @Column(nullable = false)
     private Double orderPrice;
-    @Column(nullable = false)
+    @Column(nullable = false) // i.e. product shampoo, bought two of them
     private Double orderQuantity;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Order order;

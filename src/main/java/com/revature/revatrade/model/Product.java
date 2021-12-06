@@ -26,6 +26,10 @@ public class Product {
     private Boolean discount;
     @Column
     private Double discountRate;
-    @Column(name = "description")
+    @Column
     private String description;
+    @Column
+    private String productPic;
+    /*@Column // For next iteration, look up table recommended
+    private String category;*/
 }
