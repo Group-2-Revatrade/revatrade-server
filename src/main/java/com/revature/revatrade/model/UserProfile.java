@@ -10,18 +10,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "user_profiles")
+public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer userId;
-    @Column(nullable = false, unique = true)
-    private String username;
+    private Integer userProfileId;
     @Column(nullable = false)
-    private String password;
-    @Column(nullable = false, unique = true)
-    private String email;
+    private String firstName;
     @Column(nullable = false)
-    private String userType;
+    private String lastName;
+    @Column
+    private String address;
+    @Column
+    private String city;
+    @Column
+    private Integer zipCode;
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
 }

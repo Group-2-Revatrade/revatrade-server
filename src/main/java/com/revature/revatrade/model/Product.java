@@ -10,18 +10,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "products")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer userId;
+    private Integer productId;
     @Column(nullable = false, unique = true)
-    private String username;
+    private String productName;
     @Column(nullable = false)
-    private String password;
-    @Column(nullable = false, unique = true)
-    private String email;
+    private Double productPrice;
     @Column(nullable = false)
-    private String userType;
+    private Integer productQuantity;
+    @Column
+    private Boolean discount;
+    @Column
+    private Double discountRate;
+    @Column(name = "description")
+    private String description;
 }
