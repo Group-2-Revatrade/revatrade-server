@@ -11,6 +11,8 @@ import com.revature.revatrade.model.Product;
 public interface ProductDao extends JpaRepository <Product, Integer> {
 	
 	public List<Product> findAll();
+
+	public List<Product> findByproductNameContaining(String term);
 	
 
 }

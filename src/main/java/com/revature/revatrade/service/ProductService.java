@@ -21,4 +21,8 @@ public class ProductService {
 	public List<Product> findAll(){
 		return this.productDao.findAll();
 	}
+
+	public List<Product> searchFor(String term) {
+		return this.productDao.findByproductNameContaining(term);
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.revatrade.model.Product;
@@ -29,5 +30,8 @@ public class ProductController {
 		return new ResponseEntity<List<Product>>(this.productService.findAll(), HttpStatus.OK);
 	}
 	
-
+	@GetMapping(path="search", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Product>> searchFor(@RequestParam String term){
+		return new ResponseEntity<List<Product>>(this.productService.searchFor(term), HttpStatus.OK);
+	}
 }
