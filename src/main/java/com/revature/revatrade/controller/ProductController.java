@@ -8,8 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,13 +30,9 @@ public class ProductController {
 	public ResponseEntity<List<Product>> findAll(){
 		return new ResponseEntity<List<Product>>(this.productService.findAll(), HttpStatus.OK);
 	}
+	
 	@GetMapping(path="search", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Product>> searchFor(@PathVariable String term){
 		return new ResponseEntity<List<Product>>(this.productService.searchFor(term), HttpStatus.OK);
-	}
-	@PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void saveProduct(@RequestBody Product products) {
-		this.productService.save(products);
-		
 	}
 }

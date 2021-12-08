@@ -14,12 +14,5 @@ public interface ProductDao extends JpaRepository <Product, Integer> {
 
 	public List<Product> findByproductNameContaining(String term);
 	
-	public <S extends Product> S save(S products);
-//	
-//	public void persist();
-////	
-//	public void save(Product obj) {
-//		this.entityManager.persist(obj);
-//	}
 
 }
