@@ -25,4 +25,8 @@ public class ProductService {
 	public void save(Product products) {
 		this.productDao.save(products);
 	}
+	
+	public List<Product> searchFor(String term) {
+		return this.productDao.findByproductNameContaining(term);
+	}
 }
