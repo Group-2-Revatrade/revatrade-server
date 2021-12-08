@@ -21,4 +21,8 @@ public class UserService {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       return userDao.save(user);
   }
+
+	public User saveUser(User user) {
+		return this.userDao.saveUser(user);
+	}
 }
