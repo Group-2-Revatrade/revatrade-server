@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController("Cartcontroller")
-@RequestMapping("/shoppingCart")
+@RequestMapping("/cart")
 public class CartController {
 
     CartService cartService;
@@ -36,8 +36,20 @@ public class CartController {
     }
 
     //TODO
-    //change quantities of items in the cart
+    //change quantities of items in the cart, update all items at the same time
+    @PostMapping(path="/update", consumes = MediaType.APPLICATION_JSON_VALUE )
+    public void updateAll(@RequestBody OrderDetails orderDetails){
+        cartService.updateCart(orderDetails);
+    }
+
     //Remove Item from Cart
+    @PostMapping(path = "/del", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteItem(@RequestBody OrderDetails orderDetails){
+        cartService.deleteItem(orderDetails);
+    }
+
+
+
     //update the cart.
 
 
