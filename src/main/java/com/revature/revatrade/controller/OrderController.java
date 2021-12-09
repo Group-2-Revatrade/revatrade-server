@@ -26,8 +26,8 @@ import com.revature.revatrade.service.UserService;
 public class OrderController {
 	OrderService orderService;
 	UserService userService;
-    UserProfileService profileService;	
-    
+    UserProfileService profileService;
+
 	@Autowired
 	OrderController(OrderService orderService, UserService userService, UserProfileService profileService)
 	{
@@ -43,10 +43,10 @@ public class OrderController {
 	public ResponseEntity<Object> saveOrder(@RequestBody HashMap<String, Object> hashObject)
 	{
 		HashMap<String, Object> result =  new HashMap<String, Object>();
-		
-		// NOTES(): 
+
+		// NOTES():
 		// Get JWT token
-		// Get the user id from the jwt token 
+		// Get the user id from the jwt token
 		// Get user profile by User id using userService?
 		// Set order to profile id
 		try {
@@ -54,11 +54,11 @@ public class OrderController {
 			int userId = 0;
 			UserProfile usersProfileId = null;
 			////////////////
-			
+
 			Order newOrder = new Order();
 
 			List<UserProfile> userProfiles = profileService.getAllProfiles();
-			
+
 			for (UserProfile userProfile: userProfiles)
 			{
 				if (userProfile.getUser().getUserId() == userId)
@@ -67,11 +67,11 @@ public class OrderController {
 					break;
 				}
 			}
-			
-			
+
+
 			newOrder.setAddress( (String) hashObject.get("Address"));
 			newOrder.setCity( (String) hashObject.get("City"));
-		
+
 			newOrder.setOrderAmount( (double)  hashObject.get("OrderAmount"));
 			newOrder.setOrderDate((double) hashObject.get("OrderDate"));
 			newOrder.setZipCode((int) hashObject.get("Zipcode"));
@@ -83,8 +83,8 @@ public class OrderController {
 		{
 			result.put("Error","Could not save order");
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(result);
-		
+
 	}
 }
