@@ -44,9 +44,9 @@ public class UserController {
         temp.setPassword(null);
         temp.setUsername(null);
         temp.setUserType(null);
-        respone = new JsonResponse(true, "User saved successfully", temp);
+        response = new JsonResponse(true, "User saved successfully", temp);
       } else {
-        respone = new JsonResponse(false, "User was not successfully created", null);
+        response = new JsonResponse(false, "User was not successfully created", null);
       }
       return response;
   }
