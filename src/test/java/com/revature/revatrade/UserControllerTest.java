@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 import java.util.Map;
 
+import static com.revature.revatrade.TestUser.createValidUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -38,7 +39,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserIsValid_receiveOk(){
-        User user = getUser();
+        User user = createValidUser();
 
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -46,7 +47,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserIsValid_userSavedToDatabase(){
-        User user = getUser();
+        User user = createValidUser();
 
         postSignup(user, Object.class);
         assertThat(userDao.count()).isEqualTo(1);
@@ -54,7 +55,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserIsValid_receiveSuccessMessage(){
-        User user = getUser();
+        User user = createValidUser();
 
         ResponseEntity<JsonResponse> response = postSignup(user, JsonResponse.class);
         assertThat(response.getBody().getMessage()).isNotNull();
@@ -63,7 +64,7 @@ public class UserControllerTest {
     @Test
     public void postUser_whenUserIsValid_passwordIsHashedInDatabase(){
 
-        User user = getUser();
+        User user = createValidUser();
         postSignup(user, Object.class);
 
         List<User> users = userDao.findAll();
@@ -73,7 +74,7 @@ public class UserControllerTest {
 
     @Test
     public void  postUser_whenUserHasNullUsername_receiveBadRequest(){
-        User user = getUser();
+        User user = createValidUser();
         user.setUsername(null);
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -81,7 +82,7 @@ public class UserControllerTest {
 
     @Test
     public void  postUser_whenUserHasNullEmail_receiveBadRequest(){
-        User user = getUser();
+        User user = createValidUser();
         user.setEmail(null);
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -89,7 +90,7 @@ public class UserControllerTest {
 
     @Test
     public void  postUser_whenUserHasNullPassword_receiveBadRequest(){
-        User user = getUser();
+        User user = createValidUser();
         user.setPassword(null);
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -98,7 +99,7 @@ public class UserControllerTest {
     @Test
     @Disabled
     public void  postUser_whenUserHasNullUserType_receiveBadRequest(){
-        User user = getUser();
+        User user = createValidUser();
         user.setUserType(null);
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -106,7 +107,7 @@ public class UserControllerTest {
 
     @Test
     public void  postUser_whenUserHasPasswordWithLessThanRequired_receiveBadRequest(){
-        User user = getUser();
+        User user = createValidUser();
         user.setPassword("p4ss");
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -114,7 +115,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserHasNullUsername_receiveMessageOfUsernameIsRequired(){
-        User user = getUser();
+        User user = createValidUser();
         user.setUsername(null);
         ResponseEntity<GenericInvalidMessage> response = postSignup(user, GenericInvalidMessage.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
@@ -123,7 +124,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserHasNullEmail_receiveMessageOfEmailIsRequired(){
-        User user = getUser();
+        User user = createValidUser();
         user.setEmail(null);
         ResponseEntity<GenericInvalidMessage> response = postSignup(user, GenericInvalidMessage.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
@@ -132,7 +133,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserHasNullPassword_receiveMessageOfPasswordIsRequired(){
-        User user = getUser();
+        User user = createValidUser();
         user.setPassword(null);
         ResponseEntity<GenericInvalidMessage> response = postSignup(user, GenericInvalidMessage.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
@@ -141,7 +142,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserHasPasswordWithLessThanRequired__receiveMessageOfSizeError(){
-        User user = getUser();
+        User user = createValidUser();
         user.setPassword("P4ss");
         ResponseEntity<GenericInvalidMessage> response = postSignup(user, GenericInvalidMessage.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
@@ -150,8 +151,8 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenAnotherUserHasSameUsername_receiveBadRequest(){
-        userDao.save(getUser());
-        User user = getUser();
+        userDao.save(createValidUser());
+        User user = createValidUser();
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
@@ -159,9 +160,9 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenAnotherUserHasSameUsername_receiveMessageOfDuplicateUsername(){
-        userDao.save(getUser());
+        userDao.save(createValidUser());
 
-        User user = getUser();
+        User user = createValidUser();
         ResponseEntity<GenericInvalidMessage> response = postSignup(user, GenericInvalidMessage.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
         assertThat(validationErrors.get("username")).isEqualTo("Username already taken");
@@ -169,7 +170,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserEnterNotEmail_receiveBadRequest(){
-        User user = getUser();
+        User user = createValidUser();
         user.setEmail("user_mail");
         ResponseEntity<Object> response = postSignup(user, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -177,7 +178,7 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenUserEnterNotEmail_receiveMessageOfNotEmail(){
-        User user = getUser();
+        User user = createValidUser();
         user.setEmail("user_mail");
         ResponseEntity<GenericInvalidMessage> response = postSignup(user, GenericInvalidMessage.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
@@ -186,9 +187,9 @@ public class UserControllerTest {
 
     @Test
     public void postUser_whenAnotherUserHasSameEmail_receiveMessageOfDuplicateEmail(){
-        userDao.save(getUser());
+        userDao.save(createValidUser());
 
-        User user = getUser();
+        User user = createValidUser();
         ResponseEntity<GenericInvalidMessage> response = postSignup(user, GenericInvalidMessage.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
         assertThat(validationErrors.get("email")).isEqualTo("Email address already taken");
@@ -197,14 +198,4 @@ public class UserControllerTest {
     public <T> ResponseEntity<T> postSignup(Object request, Class<T> response){
         return testRestTemplate.postForEntity(API_USERS, request, response);
     }
-
-    private User getUser() {
-        User user = new User();
-        user.setUsername("username");
-        user.setEmail("user@mail.com");
-        user.setUserType("Customer");
-        user.setPassword("p4ssWord");
-        return user;
-    }
-
 }

@@ -58,9 +58,9 @@ public class UserControllerTest {
 
 	@Test
 	public void testSaveUser() throws Exception {
-		User newUser = new User(0,"newUserUserName","123abcdef","abcd123@revatrade.com", "customer");
+		User newUser = new User(0,"newUserUserName","123abcdef","abcd123@revatrade.com", "Customer");
 		when(userService.saveUser(Mockito.any(User.class))).thenReturn(newUser);
-		this.mockMvc.perform(post("/api/signup")
+		this.mockMvc.perform(post("/api/users")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(asJsonString(newUser)));
 		verify(userService,times(1)).saveUser(newUser);
