@@ -1,12 +1,13 @@
 package com.revature.revatrade.service;
 
+import com.revature.revatrade.repository.OrderDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.revature.revatrade.model.Order;
-import com.revature.revatrade.repository.OrderDao;
+import com.revature.revatrade.repository.ShoppingCartDao;
 
 @Service("orderService")
 public class OrderService {

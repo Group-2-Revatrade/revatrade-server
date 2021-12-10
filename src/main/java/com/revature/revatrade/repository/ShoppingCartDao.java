@@ -1,11 +1,15 @@
 package com.revature.revatrade.repository;
 
-import com.revature.revatrade.model.Order;
+import com.revature.revatrade.model.OrderDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.revature.revatrade.model.Order;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository("OrderDao")
+
+@Repository("CartDao")
 @Transactional
-public interface OrderDao extends JpaRepository<Order, Integer> {
-}
+public interface ShoppingCartDao extends JpaRepository<OrderDetails, Integer>{
+    }
+
+

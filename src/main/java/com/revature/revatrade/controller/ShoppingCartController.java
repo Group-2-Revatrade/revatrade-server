@@ -2,9 +2,7 @@ package com.revature.revatrade.controller;
 
 
 import com.revature.revatrade.model.OrderDetails;
-import com.revature.revatrade.model.Product;
-import com.revature.revatrade.service.CartService;
-import com.sun.xml.bind.v2.TODO;
+import com.revature.revatrade.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,12 +13,12 @@ import java.util.List;
 
 @RestController("cartController")
 @RequestMapping("/cart")
-public class CartController {
+public class ShoppingCartController {
 
-    CartService cartService;
+    ShoppingCartService cartService;
 
     @Autowired
-    public CartController(CartService cartService) {
+    public ShoppingCartController(ShoppingCartService cartService) {
         this.cartService = cartService;
     }
 
