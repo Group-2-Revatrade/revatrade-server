@@ -15,19 +15,19 @@ public class CartService {
 
     @Autowired
     public CartService(OrderDao orderDao) {
-        orderDao = orderDao;
+        this.orderDao = orderDao;
     }
 
     public void addItem(OrderDetails orderDetails) {
-        orderDao.save(orderDetails);
-    }
+        this.orderDao.save(orderDetails);
+    } //verified
 
     public List<OrderDetails> findAll() {
-        return orderDao.findAll();
-    }
+        return this.orderDao.findAll();
+    } //verified
 
     public void deleteItem(OrderDetails orderDetails) {
-        orderDao.deleteById(orderDetails.getOrderDetailsId());
+        this.orderDao.deleteById(orderDetails.getOrderDetailsId());
     }
 
     public void updateCart(OrderDetails orderDetails) { //verify if saving all or just single item
