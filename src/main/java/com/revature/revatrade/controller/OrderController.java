@@ -27,6 +27,11 @@ public class OrderController {
 	@PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public void saveOrder(@RequestBody Order order)
 	{
+		// NOTES(): 
+		// Get JWT token
+		// Get the token from the user id
+		// Get user profile by User id using userService?
+		// Set order to profile id 
 		orderService.save(order);
 	}
 }
