@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+<<<<<<< HEAD
 @RestController("cartController")
+=======
+@RestController("Cartcontroller")
+>>>>>>> 5f941d27a545ad3402306fc0e1da2eeb6a655437
 @RequestMapping("/cart")
 public class CartController {
 
@@ -24,6 +28,7 @@ public class CartController {
         this.cartService = cartService;
     }
 
+<<<<<<< HEAD
     @GetMapping(path="/all", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<OrderDetails>> findAll(){
         return new ResponseEntity<List<OrderDetails>>(this.cartService.findAll(), HttpStatus.OK);
@@ -37,18 +42,38 @@ public class CartController {
 
 
 
+=======
+    @PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public void addItemToCart(@RequestBody OrderDetails orderDetails){
+        cartService.addItem(orderDetails);
+    }
+
+
+    @GetMapping(path="/all", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OrderDetails>> findAll(){
+        return new ResponseEntity<List<OrderDetails>>(cartService.findAll(), HttpStatus.OK);
+    }
+>>>>>>> 5f941d27a545ad3402306fc0e1da2eeb6a655437
 
     //TODO
     //change quantities of items in the cart, update all items at the same time
     @PostMapping(path="/update", consumes = MediaType.APPLICATION_JSON_VALUE )
     public void updateAll(@RequestBody OrderDetails orderDetails){
+<<<<<<< HEAD
         this.cartService.updateCart(orderDetails);
+=======
+        cartService.updateCart(orderDetails);
+>>>>>>> 5f941d27a545ad3402306fc0e1da2eeb6a655437
     }
 
     //Remove Item from Cart
     @PostMapping(path = "/del", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void deleteItem(@RequestBody OrderDetails orderDetails){
+<<<<<<< HEAD
         this.cartService.deleteItem(orderDetails);
+=======
+        cartService.deleteItem(orderDetails);
+>>>>>>> 5f941d27a545ad3402306fc0e1da2eeb6a655437
     }
 
 

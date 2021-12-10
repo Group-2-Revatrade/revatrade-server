@@ -25,6 +25,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+<<<<<<< HEAD
+=======
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+>>>>>>> 5f941d27a545ad3402306fc0e1da2eeb6a655437
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
