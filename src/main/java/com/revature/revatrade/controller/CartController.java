@@ -24,28 +24,22 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public void addItemToCart(@RequestBody OrderDetails orderDetails){
-        cartService.addItem(orderDetails);
-    }
-
-
     @GetMapping(path="/all", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<OrderDetails>> findAll(){
-        return new ResponseEntity<List<OrderDetails>>(cartService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<List<OrderDetails>>(this.cartService.findAll(), HttpStatus.OK);
     }
 
     //TODO
     //change quantities of items in the cart, update all items at the same time
     @PostMapping(path="/update", consumes = MediaType.APPLICATION_JSON_VALUE )
     public void updateAll(@RequestBody OrderDetails orderDetails){
-        cartService.updateCart(orderDetails);
+        this.cartService.updateCart(orderDetails);
     }
 
     //Remove Item from Cart
     @PostMapping(path = "/del", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void deleteItem(@RequestBody OrderDetails orderDetails){
-        cartService.deleteItem(orderDetails);
+        this.cartService.deleteItem(orderDetails);
     }
 
 
