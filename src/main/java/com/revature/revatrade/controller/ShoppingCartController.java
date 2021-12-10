@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("Cartcontroller")
+@RestController("cartController")
 @RequestMapping("/cart")
 public class ShoppingCartController {
 
@@ -26,6 +26,15 @@ public class ShoppingCartController {
     public ResponseEntity<List<OrderDetails>> findAll(){
         return new ResponseEntity<List<OrderDetails>>(this.cartService.findAll(), HttpStatus.OK);
     }
+
+
+    @PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public void addItemToCart(@RequestBody OrderDetails orderDetails){
+        this.cartService.addItem(orderDetails);
+    }
+
+
+
 
     //TODO
     //change quantities of items in the cart, update all items at the same time
