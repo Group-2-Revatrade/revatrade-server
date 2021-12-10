@@ -1,8 +1,6 @@
 package com.revature.revatrade.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,7 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "order_details")
+@Table(name = "shoppingCart")
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +21,5 @@ public class OrderDetails {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Order order;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Product product;
+    private Product product; //may substitute for Product-Id, and pull the additional data in the front end
 }
