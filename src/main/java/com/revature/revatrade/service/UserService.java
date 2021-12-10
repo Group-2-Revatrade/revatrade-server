@@ -21,13 +21,5 @@ public class UserService {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       return userDao.save(user);
   }
-<<<<<<< HEAD
-=======
 
-  /**
-	public User saveUser(User user) {
-		return this.userDao.saveUser(user);
-	}
-   ***/
->>>>>>> 5f941d27a545ad3402306fc0e1da2eeb6a655437
 }
