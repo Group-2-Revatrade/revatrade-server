@@ -1,6 +1,7 @@
 package com.revature.revatrade.service;
 
 import com.revature.revatrade.model.User;
+import com.revature.revatrade.model.UserProfile;
 import com.revature.revatrade.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,4 +22,11 @@ public class UserService {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       return userDao.save(user);
   }
+
+  public User searchByUsername(String username){
+      User inDB = userDao.findUserByUsername(username);
+
+      return inDB;
+  }
+
 }
