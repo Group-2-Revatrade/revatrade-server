@@ -55,16 +55,16 @@ public class UserControllerTest {
 		MockitoAnnotations.openMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 	}
-
-	@Test
-	public void testSaveUser() throws Exception {
-		User newUser = new User(0,"newUserUserName","123abcdef","abcd123@revatrade.com", "customer");
-		when(userService.saveUser(Mockito.any(User.class))).thenReturn(newUser);
-		this.mockMvc.perform(post("/api/signup")
-			.contentType(MediaType.APPLICATION_JSON)
-			.content(asJsonString(newUser)));
-		verify(userService,times(1)).saveUser(newUser);
-	}
+//
+//	@Test
+//	public void testSaveUser() throws Exception {
+//		User newUser = new User(0,"newUserUserName","123abcdef","abcd123@revatrade.com", "customer");
+//		when(userService.saveUser(Mockito.any(User.class))).thenReturn(newUser);
+//		this.mockMvc.perform(post("/api/signup")
+//			.contentType(MediaType.APPLICATION_JSON)
+//			.content(asJsonString(newUser)));
+//		verify(userService,times(1)).saveUser(newUser);
+//	}
 
 	public static String asJsonString(final Object obj) {
 		try {
