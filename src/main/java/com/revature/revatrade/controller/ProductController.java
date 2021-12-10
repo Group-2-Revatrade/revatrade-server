@@ -32,8 +32,8 @@ public class ProductController {
 	}
 	
 	@PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void saveProduct(@RequestBody Product products) {
-		this.productService.save(products);
+	public Product saveProduct(@RequestBody Product products) {
+		return this.productService.save(products);
 		
 	}
 	
