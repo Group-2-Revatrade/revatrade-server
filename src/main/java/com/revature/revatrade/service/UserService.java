@@ -22,7 +22,4 @@ public class UserService {
       return userDao.save(user);
   }
 
-	public User saveUser(User user) {
-		return this.userDao.saveUser(user);
-	}
 }
