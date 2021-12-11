@@ -56,7 +56,7 @@ public class UserControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 	}
 
-	@Test
+	//@Test
 	public void testSaveUser() throws Exception {
 		User newUser = new User(0,"newUserUserName","123abcdef","abcd123@revatrade.com", "Customer", null);
 		when(userService.saveUser(Mockito.any(User.class))).thenReturn(newUser);
