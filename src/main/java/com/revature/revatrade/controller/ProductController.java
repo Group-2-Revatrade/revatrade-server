@@ -37,9 +37,9 @@ public class ProductController {
 		
 	}
 	
-	@GetMapping(path="search", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Product>> searchFor(@RequestParam(value = "term", required = true) String term){
-		return new ResponseEntity<List<Product>>(this.productService.searchFor(term), HttpStatus.OK);
-	}
+// 	@GetMapping(path="search", produces=MediaType.APPLICATION_JSON_VALUE)
+// 	public ResponseEntity<List<Product>> searchFor(@RequestParam(value = "term", required = true) String term){
+// 		return new ResponseEntity<List<Product>>(this.productService.searchFor(term), HttpStatus.OK);
+// 	}
 
 }
