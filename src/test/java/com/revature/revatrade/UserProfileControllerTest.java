@@ -1,26 +1,27 @@
 package com.revature.revatrade;
 
-import com.revature.revatrade.controller.UserProfileController;
-import com.revature.revatrade.model.User;
 import com.revature.revatrade.model.UserProfile;
 import com.revature.revatrade.repository.UserDao;
 import com.revature.revatrade.repository.UserProfileDao;
 import com.revature.revatrade.service.UserProfileService;
 import com.revature.revatrade.service.UserService;
 import org.checkerframework.checker.units.qual.A;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
-import static com.revature.revatrade.TestUser.createValidUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class UserProfileControllerTest {
 
-     public static final String API_USERS_USERNAME = "/api/users/{username}";
-     public static final String API_USERS_USERNAME_PROFILE = "/api/users/{username}/profile";
+    public static final String API_USERS_USERNAME_PROFILE = "/api/users/";
 
      @Autowired
      TestRestTemplate testRestTemplate;
@@ -33,34 +34,30 @@ public class UserProfileControllerTest {
 
      @Autowired
      UserDao userDao;
-
-
+     
      @Autowired
      UserProfileDao profileDao;
 
-     @BeforeEach
-     public void setup(){
-          userDao.save(createValidUser());
-     }
+    @BeforeEach
+    public void cleanup(){
+         profileDao.deleteAll();
+         userService.saveUser(TestUser.createValidUser());
+     		
+    }
 
 
      @Test
-     public void shouldCreateUserProfile(){
-
-          UserProfileController controller = new UserProfileController();
-
+     public void postUserProfile_whenUsernameExist_receiveOK(){
           String username = "username";
-
-          controller.createUserProfile(TestProfile.createValidProfile(), username);
-//          Assertions.assertFalse(controller.getUserProfileById(username, 1).equals(null));
-
-          Assertions.assertEquals(1, profileDao.findAll());
-
+          UserProfile profile = TestProfile.createValidProfile();
+          ResponseEntity<Object> response = testRestTemplate.postForEntity(API_USERS_USERNAME_PROFILE +username+ "/profile/create", profile, Object.class );
+          assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
      }
 
-     @AfterEach
-     public void cleanup(){
-         userDao.deleteAll();
-         profileDao.deleteAll();
-     }
+
+
+    public <T> ResponseEntity<T> getUser(String username, Class<T> responseType){
+         String url = API_USERS_USERNAME_PROFILE;
+         return testRestTemplate.getForEntity(url, responseType);
+    }
 }
