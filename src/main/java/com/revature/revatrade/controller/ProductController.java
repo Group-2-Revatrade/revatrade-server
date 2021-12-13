@@ -17,6 +17,7 @@ import com.revature.revatrade.service.ProductService;
 
 @RestController("productController")
 @RequestMapping("/products")
+@CrossOrigin(origins="*")
 public class ProductController {
 	
 	ProductService productService;
