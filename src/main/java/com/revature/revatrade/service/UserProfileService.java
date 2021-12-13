@@ -3,6 +3,9 @@ package com.revature.revatrade.service;
 import com.revature.revatrade.model.User;
 import com.revature.revatrade.model.UserProfile;
 import com.revature.revatrade.repository.UserProfileDao;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +31,10 @@ public class UserProfileService {
     public UserProfile updateProfile(UserProfile profile) {
     
         return profileDao.saveAndFlush(profile);
+    }
+    
+    public List<UserProfile> getAllProfiles()
+    {
+    	return profileDao.findAll();
     }
 }

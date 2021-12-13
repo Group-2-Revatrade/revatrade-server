@@ -1,6 +1,7 @@
 package com.revature.revatrade.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.revature.revatrade.model.Order;
-import com.revature.revatrade.model.User;
+import com.revature.revatrade.model.UserProfile;
 import com.revature.revatrade.service.OrderService;
+import com.revature.revatrade.service.UserProfileService;
 import com.revature.revatrade.service.UserService;
+
 
 @Controller("orderController")
 @RequestMapping("/order")
@@ -23,12 +26,14 @@ import com.revature.revatrade.service.UserService;
 public class OrderController {
 	OrderService orderService;
 	UserService userService;
-	
+    UserProfileService profileService;	
+    
 	@Autowired
-	OrderController(OrderService orderService, UserService userService)
+	OrderController(OrderService orderService, UserService userService, UserProfileService profileService)
 	{
 		this.orderService = orderService;
 		this.userService = userService;
+		this.profileService = profileService;
 	}
 	
 	
@@ -45,13 +50,23 @@ public class OrderController {
 		try {
 			// NOTES(): This is temporary until I get the userId from the JWT token
 			int userId = 0;
+			UserProfile usersProfileId = null;
 			////////////////
 			
 			Order newOrder = new Order();
-			//int userId = (int) hashObject.get("userId");
-			//User user = userService.findUserByUserId(userId); 
+
+			List<UserProfile> userProfiles = profileService.getAllProfiles();
 			
-			//System.out.println("" + hashObject.toString());
+			for (UserProfile userProfile: userProfiles)
+			{
+				if (userProfile.getUser().getUserId() == userId)
+				{
+					usersProfileId = userProfile;
+					break;
+				}
+			}
+			
+			
 			
 			
 			newOrder.setAddress( (String) hashObject.get("Address"));
@@ -60,7 +75,7 @@ public class OrderController {
 			newOrder.setOrderAmount( (double)  hashObject.get("OrderAmount"));
 			newOrder.setOrderDate((double) hashObject.get("OrderDate"));
 			newOrder.setZipCode((int) hashObject.get("Zipcode"));
-			
+			newOrder.setUserProfile(usersProfileId);
 			orderService.save(newOrder);
 			result.put("success", "success");
 		}
