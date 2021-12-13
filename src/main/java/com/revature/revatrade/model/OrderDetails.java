@@ -3,6 +3,8 @@ package com.revature.revatrade.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,4 +24,15 @@ public class OrderDetails {
     private Order order;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Product product; //may substitute for Product-Id, and pull the additional data in the front end
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User user;
+
+    public Integer getUser() { //get the user Id to tie the order to0 a particular user
+        return user.getUserId();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
