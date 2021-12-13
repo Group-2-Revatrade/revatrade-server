@@ -17,7 +17,6 @@ public class OrderService {
 	{
 		this.orderDao = orderDao;
 	}
-	@PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public void save(Order order)
 	{
 		orderDao.save(order);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.revature.revatrade.model.Order;
+import com.revature.revatrade.model.User;
 import com.revature.revatrade.service.OrderService;
 import com.revature.revatrade.service.UserService;
 
@@ -42,11 +43,16 @@ public class OrderController {
 		// Get user profile by User id using userService?
 		// Set order to profile id
 		try {
+			// NOTES(): This is temporary until I get the userId from the JWT token
+			int userId = 0;
+			////////////////
+			
 			Order newOrder = new Order();
 			//int userId = (int) hashObject.get("userId");
 			//User user = userService.findUserByUserId(userId); 
 			
 			//System.out.println("" + hashObject.toString());
+			
 			
 			newOrder.setAddress( (String) hashObject.get("Address"));
 			newOrder.setCity( (String) hashObject.get("City"));
@@ -54,7 +60,7 @@ public class OrderController {
 			newOrder.setOrderAmount( (double)  hashObject.get("OrderAmount"));
 			newOrder.setOrderDate((double) hashObject.get("OrderDate"));
 			newOrder.setZipCode((int) hashObject.get("Zipcode"));
-			//newOrder.setUserProfile(user.getProfileId());
+			
 			orderService.save(newOrder);
 			result.put("success", "success");
 		}
