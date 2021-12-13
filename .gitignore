@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 h2testing
+h2database
 
 ### STS ###
 .apt_generated
