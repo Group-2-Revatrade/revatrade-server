@@ -11,7 +11,7 @@ import com.revature.revatrade.model.Product;
 import com.revature.revatrade.repository.ProductDao;
 
 @Transactional
-@Service("producService")
+@Service("productService")
 public class ProductService {
 
 	ProductDao productDao;
