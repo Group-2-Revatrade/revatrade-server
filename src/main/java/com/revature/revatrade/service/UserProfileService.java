@@ -34,6 +34,7 @@ public class UserProfileService {
 //    }
 
     public UserProfile updateProfile(UserProfile profile) {
+    
         return profileDao.saveAndFlush(profile);
     }
 }
