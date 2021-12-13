@@ -53,6 +53,16 @@ public class UserProfileControllerTest {
           ResponseEntity<Object> response = testRestTemplate.postForEntity(API_USERS_USERNAME_PROFILE +username+ "/profile/create", profile, Object.class );
           assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
      }
+     
+     @Test
+     public void getUserProfile_recieveOK() {
+    	 String username = "username";
+    	 UserProfile profile = TestProfile.createValidProfile();
+    	 profile.setUser(TestUser.createValidUser());
+    	 profileDao.save(profile);
+         ResponseEntity<Object> response = testRestTemplate.getForEntity(API_USERS_USERNAME_PROFILE +username+ "/profile/" + profile.getUserProfileId(), Object.class, profile );
+         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+     }
 
 
 
