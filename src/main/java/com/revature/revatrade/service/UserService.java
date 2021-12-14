@@ -23,10 +23,29 @@ public class UserService {
       return userDao.save(user);
   }
 
-  public User searchByUsername(String username){
+  public User searchUserByUsername(String username){
       User inDB = userDao.findUserByUsername(username);
 
       return inDB;
   }
+
+    public User searchUserByUserId(Integer id){
+        User inDB = userDao.findUserByUserId(id);
+        return inDB;
+    }
+
+    public Integer searchUserIdByUsername(String username){
+        User inDB = userDao.findUserByUsername(username);
+        return inDB.getProfileId();
+    }
+
+    public Integer searchProfileIdByUsername(String username){
+        Integer profileId = userDao.findUserByUsername(username).getProfileId();
+        return profileId;
+    }
+
+    public User updateUser(User user){
+      return userDao.saveAndFlush(user);
+    }
 
 }

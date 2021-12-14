@@ -38,7 +38,8 @@ public class UserController {
       JsonResponse response; 
       if(user.getUserType() == null){
           user.setUserType("Customer");
-      } 
+      }
+      user.setProfileId(null);
       User temp = userService.saveUser(user);
       if(temp != null) {
         temp.setPassword(null);

@@ -13,7 +13,7 @@ public class TestProfile {
         profile.setZipCode(11373);
         profile.setProfilePic("profile_picture.png");
         profile.setAboutMe("This is where you describe about your self so that other can vew and know you");
-        profile.setUser(TestUser.createValidUser());
+        profile.setUser( new User());
         return profile;
     }
 }
