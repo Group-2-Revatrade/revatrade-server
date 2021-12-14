@@ -11,9 +11,5 @@ import java.util.Optional;
 
 public interface UserProfileDao extends JpaRepository<UserProfile, Integer> {
 
-////    Optional<UserProfile> findByUser(Integer UserId);
-//    @Modifying
-//    @Query("from UserProfile p inner join user u where p.user_id = u.user_id")
-//    UserProfile findUserProfileByUser(@Param("user") User user);
 
 }
