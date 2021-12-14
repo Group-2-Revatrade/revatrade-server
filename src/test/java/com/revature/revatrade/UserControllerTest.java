@@ -57,7 +57,7 @@ public class UserControllerTest {
 		User user = createValidUser();
 
 		ResponseEntity<JsonResponse> response = postSignup(user, JsonResponse.class);
-		assertThat(response.getBody().getMessage()).isNull();
+		assertThat(response.getBody().getMessage()).isNotNull();
 	}
 
 	@Test

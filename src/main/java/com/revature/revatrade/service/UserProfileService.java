@@ -29,9 +29,6 @@ public class UserProfileService {
         }
 
     }
-//    public UserProfile getProfileByUserId(Integer userId) {
-//        return profileDao.findById(userId).get();
-//    }
 
     public UserProfile updateProfile(UserProfile profile) {
         return profileDao.saveAndFlush(profile);

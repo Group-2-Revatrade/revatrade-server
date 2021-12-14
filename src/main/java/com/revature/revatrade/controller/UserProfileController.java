@@ -93,7 +93,7 @@ public class UserProfileController {
 
 
     @GetMapping("/{username}/profile/{id}")
-    public UserProfile getUserProfileById(@PathVariable("username") String username,@PathVariable("id") Integer profileId){
+    public UserProfile getUserProfileById(@PathVariable("username") String username, @PathVariable("id") Integer profileId){
         UserProfile userProfile = new UserProfile();
         UserProfile profile = profileService.getProfileById(profileId);
 

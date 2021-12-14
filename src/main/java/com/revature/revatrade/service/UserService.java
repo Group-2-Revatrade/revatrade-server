@@ -29,7 +29,6 @@ public class UserService {
       return inDB;
   }
 
-<<<<<<< HEAD
     public User searchUserByUserId(Integer id){
         User inDB = userDao.findUserByUserId(id);
         return inDB;
@@ -49,7 +48,6 @@ public class UserService {
       return userDao.saveAndFlush(user);
     }
 
-=======
   public User findUserByUsernameAndPassword(String username, String password) {
     System.out.println("UserService > findUserByUsernameAndPassword >>> username:password: " + username + " :: " + password);
     User user = this.userDao.findUserByUsernameAndPassword(username, password);
@@ -62,5 +60,4 @@ public class UserService {
       return user;
     }
   }
->>>>>>> 1a4f2cb
 }
