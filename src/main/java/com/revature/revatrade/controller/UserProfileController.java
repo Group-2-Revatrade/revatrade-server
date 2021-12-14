@@ -93,19 +93,23 @@ public class UserProfileController {
 
 
     @GetMapping("/{username}/profile/{id}")
-    public UserProfile getUserProfileById(@PathVariable("username") String username, @PathVariable("id") Integer profileId){
+    public JsonResponse getUserProfileById(@PathVariable("username") String username, @PathVariable("id") Integer profileId){
         UserProfile userProfile = new UserProfile();
-        UserProfile profile = profileService.getProfileById(profileId);
+        try{
+            UserProfile profile = profileService.getProfileById(profileId);
 
-        if(profile != null){
-            profile.getUser().setPassword(null);
-            return profile;
-        }else{
-            User inDBUser = userService.searchUserByUsername(username);
-            userProfile.setUser(inDBUser);
-            userProfile.getUser().setPassword(null);
-            return userProfile;
+            if(profile != null){
+                profile.getUser().setPassword(null);
+                return new JsonResponse(true, "Profile Access successfully ", profile);
+            }else{
+                return new JsonResponse(false, " Profile not found  ", null);
+            }
+        }catch (Exception e){
+            return new JsonResponse(false, " Data not found  ", null);
+
         }
+
+
     }
 
     @PostMapping("/{username}/profile/{id}")
