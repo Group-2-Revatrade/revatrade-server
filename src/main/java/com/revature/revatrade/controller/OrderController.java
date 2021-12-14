@@ -69,8 +69,6 @@ public class OrderController {
 			}
 			
 			
-			
-			
 			newOrder.setAddress( (String) hashObject.get("Address"));
 			newOrder.setCity( (String) hashObject.get("City"));
 		
