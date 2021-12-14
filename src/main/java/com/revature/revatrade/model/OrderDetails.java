@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,16 +23,11 @@ public class OrderDetails {
     private Order order;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Product product; //may substitute for Product-Id, and pull the additional data in the front end
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //additional edits to table to allow linking of user to orders.//pending review
     private User user;
+    private Integer userId;
 
-    public Integer getUser() { //get the user Id to tie the order to0 a particular user
-        return user.getUserId();
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-        //this.user = user.getUserId();
-    }
+
 
 }
