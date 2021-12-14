@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.revature.revatrade.model.Product;
@@ -14,6 +15,7 @@ import com.revature.revatrade.service.ProductService;
 
 @RestController("productController")
 @RequestMapping("/products")
+@CrossOrigin(value = "http://localhost:4200", allowCredentials = "true")
 public class ProductController {
 	
 	ProductService productService;
