@@ -3,6 +3,9 @@ package com.revature.revatrade.service;
 import com.revature.revatrade.model.User;
 import com.revature.revatrade.model.UserProfile;
 import com.revature.revatrade.repository.UserDao;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,11 +26,31 @@ public class UserService {
       return userDao.save(user);
   }
 
-  public User searchByUsername(String username){
+  public User searchUserByUsername(String username){
       User inDB = userDao.findUserByUsername(username);
-
+      
       return inDB;
   }
+
+
+    public User searchUserByUserId(Integer id){
+        User inDB = userDao.findUserByUserId(id);
+        return inDB;
+    }
+
+    public Integer searchUserIdByUsername(String username){
+        User inDB = userDao.findUserByUsername(username);
+        return inDB.getProfileId();
+    }
+
+    public Integer searchProfileIdByUsername(String username){
+        Integer profileId = userDao.findUserByUsername(username).getProfileId();
+        return profileId;
+    }
+
+    public User updateUser(User user){
+      return userDao.saveAndFlush(user);
+    }
 
   public User findUserByUsernameAndPassword(String username, String password) {
     System.out.println("UserService > findUserByUsernameAndPassword >>> username:password: " + username + " :: " + password);
@@ -41,4 +64,5 @@ public class UserService {
       return user;
     }
   }
+
 }

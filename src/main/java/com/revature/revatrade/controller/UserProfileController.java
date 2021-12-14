@@ -33,16 +33,45 @@ public class UserProfileController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/{username}/profile")
+    public JsonResponse findUserProfile(@PathVariable("username") String username){
+
+        try{
+            User user = userService.searchUserByUsername(username);
+
+            if(user.getProfileId() != null){
+
+                UserProfile profile = profileService.getProfileById(user.getProfileId());
+                profile.getUser().setPassword(null);
+
+                return  new JsonResponse(true, " Getting user profile ", profile);
+            }else{
+                UserProfile userProfile = new UserProfile();
+                User inDbUser = userService.searchUserByUsername(username);
+                userProfile.setUser(inDbUser);
+                userProfile.getUser().setPassword(null);
+                return new JsonResponse(true, "Getting user details", userProfile);
+            }
+
+        }
+        catch (Exception e){
+            return new JsonResponse(false, " Username Error  ", null);
+        }
+
+    }
+
     @PostMapping("{username}/profile/create")
     public JsonResponse createUserProfile(@Valid @RequestBody UserProfile profile, @PathVariable("username") String username){
         JsonResponse response;
 
-        User user = userService.searchByUsername(username);
+        User user = userService.searchUserByUsername(username);
 
         if(user != null){
             try{
                 profile.setUser(user);
                 UserProfile temp = profileService.persistProfile(profile);
+                user.setProfileId(temp.getUserProfileId());
+                userService.updateUser(user);
                 if(temp != null) {
                     temp.setUser(null);
                     response = new JsonResponse(true, "Profile saved successfully", temp);
@@ -62,11 +91,21 @@ public class UserProfileController {
         }
     }
 
+
     @GetMapping("/{username}/profile/{id}")
-    public UserProfile getUserProfileById(@PathVariable("id") Integer profileId){
+    public UserProfile getUserProfileById(@PathVariable("username") String username,@PathVariable("id") Integer profileId){
+        UserProfile userProfile = new UserProfile();
         UserProfile profile = profileService.getProfileById(profileId);
-        profile.getUser().setPassword(null);
-        return profile;
+
+        if(profile != null){
+            profile.getUser().setPassword(null);
+            return profile;
+        }else{
+            User inDBUser = userService.searchUserByUsername(username);
+            userProfile.setUser(inDBUser);
+            userProfile.getUser().setPassword(null);
+            return userProfile;
+        }
     }
 
     @PostMapping("/{username}/profile/{id}")

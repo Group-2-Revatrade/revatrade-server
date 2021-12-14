@@ -67,6 +67,18 @@ public class UserController {
     return response;
   }
 
+//  public User createUser(@Valid @RequestBody User user){
+//    System.out.println("PostMapping > createUser >>> this controller is being reached");
+//    if(user.getUserType() == null){
+//      System.out.println("PostMapping > createUser >>> user.getUserType()");
+//      user.setUserType("Customer");
+//    } 
+//    User temp = userService.saveUser(user);
+//    System.out.println("PostMapping > createUser >>> temp: " + temp);
+//    return temp;
+
+//  }
+
   @ExceptionHandler({MethodArgumentNotValidException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   GenericInvalidMessage handleValidationException(MethodArgumentNotValidException exception, HttpServletRequest request){
