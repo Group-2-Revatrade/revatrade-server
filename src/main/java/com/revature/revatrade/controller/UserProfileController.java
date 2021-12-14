@@ -18,12 +18,13 @@ import org.springframework.web.client.HttpStatusCodeException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.xml.ws.RespectBinding;
+//import javax.xml.ws.RespectBinding;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users/")
+@CrossOrigin(value = "http://localhost:4200", allowCredentials = "true")
 public class UserProfileController {
 
     @Autowired

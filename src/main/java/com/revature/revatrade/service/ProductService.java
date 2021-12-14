@@ -2,13 +2,16 @@ package com.revature.revatrade.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.revatrade.model.Product;
 import com.revature.revatrade.repository.ProductDao;
 
-@Service("producService")
+@Transactional
+@Service("productService")
 public class ProductService {
 
 	ProductDao productDao;
@@ -22,7 +25,11 @@ public class ProductService {
 		return this.productDao.findAll();
 	}
 	
-	public void save(Product products) {
-		this.productDao.save(products);
+	public Product save(Product products) {
+		return this.productDao.save(products);
+	}
+	
+	public List<Product> searchFor(String term) {
+		return this.productDao.findByproductNameContaining(term);
 	}
 }

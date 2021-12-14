@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.revature.revatrade.model.Product;
 import com.revature.revatrade.service.ProductService;
 
 @RestController("productController")
 @RequestMapping("/products")
+@CrossOrigin(value = "http://localhost:4200", allowCredentials = "true")
 public class ProductController {
 	
 	ProductService productService;
@@ -32,10 +34,14 @@ public class ProductController {
 	}
 	
 	@PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void saveProduct(@RequestBody Product products) {
-		this.productService.save(products);
+	public Product saveProduct(@RequestBody Product products) {
+		return this.productService.save(products);
 		
 	}
 	
+	@GetMapping(path="search", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Product>> searchFor(@RequestParam(value = "term", required = true) String term){
+		return new ResponseEntity<List<Product>>(this.productService.searchFor(term), HttpStatus.OK);
+	}
 
 }
