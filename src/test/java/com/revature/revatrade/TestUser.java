@@ -9,6 +9,7 @@ public class TestUser {
         user.setEmail("user@mail.com");
         user.setUserType("Customer");
         user.setPassword("p4ssWord");
+        user.setProfileId(null);
         return user;
     }
 }

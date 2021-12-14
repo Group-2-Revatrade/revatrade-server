@@ -42,6 +42,8 @@ public class User {
     @Column(nullable = false)
     @JsonView(Views.Base.class)
     private String userType;
+    @Column(nullable = true)
+    private Integer profileId;
 
 
 }
