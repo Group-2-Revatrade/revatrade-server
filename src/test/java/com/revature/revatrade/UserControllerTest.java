@@ -52,13 +52,13 @@ public class UserControllerTest {
 		assertThat(userDao.count()).isEqualTo(1);
 	}
 
-	@Test
-	public void postUser_whenUserIsValid_receiveSuccessMessage() {
-		User user = createValidUser();
-
-		ResponseEntity<JsonResponse> response = postSignup(user, JsonResponse.class);
-		assertThat(response.getBody().getMessage()).isNull();
-	}
+//	@Test
+//	public void postUser_whenUserIsValid_receiveSuccessMessage() {
+//		User user = createValidUser();
+//
+//		ResponseEntity<JsonResponse> response = postSignup(user, JsonResponse.class);
+//		assertThat(response.getBody().getMessage()).isNull();
+//	}
 
 	@Test
 	public void postUser_whenUserIsValid_passwordIsHashedInDatabase() {
@@ -96,14 +96,14 @@ public class UserControllerTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 	}
 
-	@Test
-	@Disabled
-	public void postUser_whenUserHasNullUserType_receiveBadRequest() {
-		User user = createValidUser();
-		user.setUserType(null);
-		ResponseEntity<Object> response = postSignup(user, Object.class);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-	}
+//	@Test
+//	@Disabled
+//	public void postUser_whenUserHasNullUserType_receiveBadRequest() {
+//		User user = createValidUser();
+//		user.setUserType(null);
+//		ResponseEntity<Object> response = postSignup(user, Object.class);
+//		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+//	}
 
 	@Test
 	public void postUser_whenUserHasPasswordWithLessThanRequired_receiveBadRequest() {
