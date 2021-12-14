@@ -35,6 +35,7 @@ public class ProductController {
 	
 	@PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public Product saveProduct(@RequestBody Product products) {
+		System.out.println(products);
 		return this.productService.save(products);
 		
 	}
