@@ -51,15 +51,20 @@ public class UserController {
   }
 
   @PostMapping("/users")
-  public User createUser(@Valid @RequestBody User user){
-    System.out.println("PostMapping > createUser >>> this controller is being reached");
+  public JsonResponse createUser(@Valid @RequestBody User user){
+    JsonResponse response;
     if(user.getUserType() == null){
-      System.out.println("PostMapping > createUser >>> user.getUserType()");
       user.setUserType("Customer");
-    } 
+    }
     User temp = userService.saveUser(user);
-    System.out.println("PostMapping > createUser >>> temp: " + temp);
-    return temp;
+    if(temp != null) {
+      temp.setPassword(null);
+      temp.setUserType(null);
+      response = new JsonResponse(true, "User saved successfully", temp);
+    } else {
+      response = new JsonResponse(false, "User was not successfully created", null);
+    }
+    return response;
   }
 
   @ExceptionHandler({MethodArgumentNotValidException.class})

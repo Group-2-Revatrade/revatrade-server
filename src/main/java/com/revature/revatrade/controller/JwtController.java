@@ -2,6 +2,7 @@ package com.revature.revatrade.controller;
 
 import java.util.UUID;
 
+import com.revature.revatrade.model.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,21 +29,16 @@ public class JwtController {
 	private UserService userService;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> userLogin(@RequestBody User user) {
-		System.out.println("@PostMapping > JwtController >>> user.getUsername()11111:"+user.getUsername());
-		System.out.println("@PostMapping > JwtController >>> user.getPassword()11111:"+user.getPassword());
-		System.out.println("@PostMapping > JwtController >>> user11111: " + user);
+	public JsonResponse userLogin(@RequestBody User user) {
+		JsonResponse response;
 		user = this.userService.findUserByUsernameAndPassword(user.getUsername(), user.getPassword());
-		System.out.println("@PostMapping > JwtController >>> user222222: " + user);
 		if(user != null) {
-			System.out.println("@PostMapping > JwtController >>> user33333: " + user);
 			String jwt = JwtService.createJWT(UUID.randomUUID().toString(), "Revatrade", String.valueOf(user.getUserId()), 6000000L);
-			System.out.println("@PostMapping > JwtController >>> jwt > GOOD: " + jwt);
-
-			return new ResponseEntity<String>("{\"jwt\":\"" + jwt + "\"}", HttpStatus.OK);
-		}
-		System.out.println("@PostMapping > JwtController >>> jwt > ERROR");
-		return null;
+			response = new JsonResponse(true, jwt, null);
+			// return new ResponseEntity<String>("{\"jwt\":\"" + jwt + "\"}", HttpStatus.OK);
+		} else
+			response = new JsonResponse(false, "Invalid Username and/or Password", null);
+		return response;
 	}
 
 	@GetMapping("/authenticate")
