@@ -51,7 +51,7 @@ public class UserController {
   }
 
   @PostMapping("/users")
-  public JsonResponse createUser(@Valid @RequestBody User user){
+  public JsonResponse createUser(@RequestBody User user){
     JsonResponse response;
     if(user.getUserType() == null){
       user.setUserType("Customer");
