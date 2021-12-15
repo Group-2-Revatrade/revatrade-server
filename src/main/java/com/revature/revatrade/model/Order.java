@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +26,7 @@ public class Order {
     @Column(nullable = false)
     private Double orderAmount;
     @Column(nullable = false)
-    private Double orderDate;
+    private Calendar orderDate;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserProfile userProfile;
 }
