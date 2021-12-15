@@ -14,7 +14,7 @@ public interface ShoppingCartDao extends JpaRepository <OrderDetails, Integer> {
 
    public List<OrderDetails> findByUserIdContaining(String userId);
 
-   //public <S extends OrderDetails> S save(S orders);
+   public <S extends OrderDetails> S save(S orders);
 
 }
 

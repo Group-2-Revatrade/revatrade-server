@@ -3,9 +3,10 @@ package com.revature.revatrade.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -23,11 +24,9 @@ public class OrderDetails {
     private Order order;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Product product; //may substitute for Product-Id, and pull the additional data in the front end
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //additional edits to table to allow linking of user to orders.//pending review
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private User user;
-    private Integer userId;
-
-
+    private String userId;
 
 
 }
