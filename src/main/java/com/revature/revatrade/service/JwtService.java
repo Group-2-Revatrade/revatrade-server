@@ -16,9 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JwtService {
 private static String SECRET_KEY = "${jwt.secret}";
-
 	public static String createJWT(String id, String issuer, String subject, long ttlMillis) {
-		System.out.println("JwtService > createJWT >>> jwt: " + id + ":" + issuer + ":" + subject + ":" + ttlMillis);
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 		long nowMillis = System.currentTimeMillis();
 		Date now = new Date(nowMillis);
@@ -30,11 +28,10 @@ private static String SECRET_KEY = "${jwt.secret}";
 		JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer).signWith(signatureAlgorithm, signingKey);
 
 		if (ttlMillis >= 0) {
-				long expMillis = nowMillis + ttlMillis;
-				Date exp = new Date(expMillis);
-				builder.setExpiration(exp);
+			long expMillis = nowMillis + ttlMillis;
+			Date exp = new Date(expMillis);
+			builder.setExpiration(exp);
 		}
-
 		return builder.compact();
 	}
 

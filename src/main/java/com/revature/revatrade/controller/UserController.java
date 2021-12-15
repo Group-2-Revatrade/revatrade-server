@@ -23,69 +23,55 @@ import com.revature.revatrade.service.JwtService;
 @RequestMapping("/api")
 //@CrossOrigin(value = "http://localhost:4200", allowCredentials = "true")
 public class UserController {
-  UserService userService;
+	UserService userService;
 
-  @Autowired
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+	@Autowired
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
-  @GetMapping("/testjwt")
-  public JsonResponse testJWT(@RequestHeader("Authorization") String jwt){
-    JsonResponse response;
-    try {
-      int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
-      System.out.println("GetMapping > testJWT >>> this JWT controller is being reached -JWT GOOD > ID: " + id);
-      return response = new JsonResponse(true, "User authenticated & identified successfully", id);
-    }catch(io.jsonwebtoken.MalformedJwtException e) {
-      System.out.println("GetMapping > testJWT >>> this JWT controller is being reached -JWT ERROR");
-      return response = new JsonResponse(false, "User was not successfully authenticated", null);
-    }
-  }
+	@GetMapping("/testjwt")
+	public JsonResponse testJWT(@RequestHeader("Authorization") String jwt){
+		JsonResponse response;
+		try {
+			int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+			return response = new JsonResponse(true, "User authenticated & identified successfully", id);
+		}catch(io.jsonwebtoken.MalformedJwtException e) {
+			return response = new JsonResponse(false, "User was not successfully authenticated", null);
+		}
+	}
 
-  @PostMapping("/users")
-  public JsonResponse createUser(@Valid @RequestBody User user){
-    JsonResponse response;
-    if(user.getUserType() == null){
-      user.setUserType("Customer");
-    }
-    User temp = userService.saveUser(user);
-    if(temp != null) {
-      temp.setPassword(null);
-      temp.setUserType(null);
-      response = new JsonResponse(true, "User saved successfully", temp);
-    } else {
-      response = new JsonResponse(false, "User was not successfully created", null);
-    }
-    return response;
-  }
+	@PostMapping("/users")
+	public JsonResponse createUser(@Valid @RequestBody User user){
+		JsonResponse response;
+		if(user.getUserType() == null){
+			user.setUserType("Customer");
+		}
+		User temp = userService.saveUser(user);
+		if(temp != null) {
+			temp.setPassword(null);
+			temp.setUserType(null);
+			response = new JsonResponse(true, "User saved successfully", temp);
+		} else {
+			response = new JsonResponse(false, "User was not successfully created", null);
+		}
+		return response;
+	}
 
-//  public User createUser(@Valid @RequestBody User user){
-//    System.out.println("PostMapping > createUser >>> this controller is being reached");
-//    if(user.getUserType() == null){
-//      System.out.println("PostMapping > createUser >>> user.getUserType()");
-//      user.setUserType("Customer");
-//    } 
-//    User temp = userService.saveUser(user);
-//    System.out.println("PostMapping > createUser >>> temp: " + temp);
-//    return temp;
+	@ExceptionHandler({MethodArgumentNotValidException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	GenericInvalidMessage handleValidationException(MethodArgumentNotValidException exception, HttpServletRequest request){
+		GenericInvalidMessage invalidMessage = new GenericInvalidMessage(400, "Validation error", request.getServletPath());
 
-//  }
+		BindingResult result = exception.getBindingResult();
 
-  @ExceptionHandler({MethodArgumentNotValidException.class})
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  GenericInvalidMessage handleValidationException(MethodArgumentNotValidException exception, HttpServletRequest request){
-    GenericInvalidMessage invalidMessage = new GenericInvalidMessage(400, "Validation error", request.getServletPath());
+		Map<String, String> validationErrors = new HashMap<>();
 
-    BindingResult result = exception.getBindingResult();
+		for(FieldError fieldError: result.getFieldErrors()){
+				validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+		}
+		invalidMessage.setValidationErrors(validationErrors);
 
-    Map<String, String> validationErrors = new HashMap<>();
-
-    for(FieldError fieldError: result.getFieldErrors()){
-        validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-    }
-    invalidMessage.setValidationErrors(validationErrors);
-
-    return  invalidMessage;
-  }
+		return  invalidMessage;
+	}
 }
