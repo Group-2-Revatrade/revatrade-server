@@ -30,24 +30,17 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("/test")
-  public String test() {
-    System.out.println("GetMapping > test >>> this controller is being reached");
-    return "GetMapping >>> this controller is being reached";
-  }
-
   @GetMapping("/testjwt")
   public JsonResponse testJWT(@RequestHeader("Authorization") String jwt){
     JsonResponse response;
     try {
       int id = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
       System.out.println("GetMapping > testJWT >>> this JWT controller is being reached -JWT GOOD > ID: " + id);
-      response = new JsonResponse(true, "User authenticated & identified successfully", id);
-    }catch(java.lang.NullPointerException e) {
+      return response = new JsonResponse(true, "User authenticated & identified successfully", id);
+    }catch(io.jsonwebtoken.MalformedJwtException e) {
       System.out.println("GetMapping > testJWT >>> this JWT controller is being reached -JWT ERROR");
-      response = new JsonResponse(false, "User was not successfully authenticated", null);
+      return response = new JsonResponse(false, "User was not successfully authenticated", null);
     }
-    return response;
   }
 
   @PostMapping("/users")
