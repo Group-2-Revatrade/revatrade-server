@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController("cartController")
 @RequestMapping("/cart")
+@CrossOrigin(value = "http://localhost:4200", allowCredentials = "true")
 public class ShoppingCartController {
 
     ShoppingCartService cartService;

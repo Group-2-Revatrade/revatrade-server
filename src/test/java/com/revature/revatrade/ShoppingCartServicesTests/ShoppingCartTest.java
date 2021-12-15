@@ -48,8 +48,8 @@ public class ShoppingCartTest {
     @Test
     public void AddItemsToCartTest(){
         List<OrderDetails> addToCart = new ArrayList<>();
-        addToCart.add(new OrderDetails(1,19.50,2.0,null, null,null,1));
-        addToCart.add(new OrderDetails(2 , 3.50, 1.0 , null, null,null,1));
+        addToCart.add(new OrderDetails(1,19.50,2.0,null, null,null,null ));
+        addToCart.add(new OrderDetails(2 , 3.50, 1.0 , null, null,null,null));
         int x = this.cartService.findAll().size(); //number of items in the cart to start.
         int y = addToCart.size(); //number of item added
         this.cartController.addItemToCart(addToCart.iterator().next()); //add items to the cart
@@ -61,8 +61,8 @@ public class ShoppingCartTest {
     @Test
     public void RemoveProductFromCartTest(){
         List<OrderDetails> addToCart = new ArrayList<>();
-        addToCart.add(new OrderDetails(1,19.50,2.0,null, null,null,1));
-        addToCart.add(new OrderDetails(2 , 3.50, 1.0 , null, null,null,1));
+        addToCart.add(new OrderDetails(1,19.50,2.0,null, null,null,null));
+        addToCart.add(new OrderDetails(2 , 3.50, 1.0 , null, null,null,null));
         this.cartController.addItemToCart(addToCart.iterator().next());
         System.out.println(cartController.findAll().toString());
         //this.cartController.deleteItem(addToCart.get(addToCart.indexOf(addToCart.contains("2.0"))+1));

@@ -8,10 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.nio.file.DirectoryStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+@Transactional
 @Service("cartService")
 public class ShoppingCartService {
     ShoppingCartDao cartDao;
@@ -38,8 +43,6 @@ public class ShoppingCartService {
     }
 
     public List<OrderDetails> findAllById(Integer userId) {
-
-        return this.cartDao.findOrdersByID(userId).stream().toList();
-
+      return this.cartDao.findByUserIdContaining(userId.toString());
     }
 }
