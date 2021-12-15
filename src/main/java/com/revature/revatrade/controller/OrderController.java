@@ -1,88 +1,48 @@
 package com.revature.revatrade.controller;
 
-import java.util.HashMap;
-import java.util.List;
-
+import com.revature.revatrade.model.JsonResponse;
+import com.revature.revatrade.service.JwtService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.revature.revatrade.model.Order;
-import com.revature.revatrade.model.UserProfile;
 import com.revature.revatrade.service.OrderService;
-import com.revature.revatrade.service.UserProfileService;
-import com.revature.revatrade.service.UserService;
 
-
-@Controller("orderController")
+@RestController("orderController")
 @RequestMapping("/order")
 @CrossOrigin(value = "http://localhost:4200", allowCredentials = "true")
 public class OrderController {
 	OrderService orderService;
-	UserService userService;
-    UserProfileService profileService;	
+    JwtService jwtService;
     
 	@Autowired
-	OrderController(OrderService orderService, UserService userService, UserProfileService profileService)
+	OrderController(OrderService orderService, JwtService jwtService)
 	{
 		this.orderService = orderService;
-		this.userService = userService;
-		this.profileService = profileService;
+		this.jwtService = jwtService;
 	}
-	
-	
-	@PostMapping(path="/new", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> saveOrder(@RequestBody HashMap<String, Object> hashObject)
-	{
-		HashMap<String, Object> result =  new HashMap<String, Object>();
-		
-		// NOTES(): 
-		// Get JWT token
-		// Get the user id from the jwt token 
-		// Get user profile by User id using userService?
-		// Set order to profile id
-		try {
-			// NOTES(): This is temporary until I get the userId from the JWT token
-			int userId = 0;
-			UserProfile usersProfileId = null;
-			////////////////
-			
-			Order newOrder = new Order();
 
-			List<UserProfile> userProfiles = profileService.getAllProfiles();
-			
-			for (UserProfile userProfile: userProfiles)
-			{
-				if (userProfile.getUser().getUserId() == userId)
-				{
-					usersProfileId = userProfile;
-					break;
-				}
+	@PostMapping(path="/new")
+	public JsonResponse saveOrder(@RequestHeader("Authorization") String jwt, @RequestBody Order order)
+	{
+		JsonResponse response;
+		// Get JWT token
+		Claims claim = jwtService.decodeJWT(jwt);
+		// Validating the token is authentic to our application
+		if(claim.getIssuer().equals("Revatrade")) {
+			// Get the user id from the jwt token
+			Integer userId = Integer.parseInt(claim.getSubject());
+			// Attempting to save order
+			Order savedOrder = this.orderService.save(order, userId);
+			if(savedOrder != null) {
+				response = new JsonResponse(true, "Order successfully placed", savedOrder);
+			} else {
+				response = new JsonResponse(false, "An error occurred, order was not placed", null);
 			}
-			
-			
-			newOrder.setAddress( (String) hashObject.get("Address"));
-			newOrder.setCity( (String) hashObject.get("City"));
-		
-			newOrder.setOrderAmount( (double)  hashObject.get("OrderAmount"));
-			newOrder.setOrderDate((double) hashObject.get("OrderDate"));
-			newOrder.setZipCode((int) hashObject.get("Zipcode"));
-			newOrder.setUserProfile(usersProfileId);
-			orderService.save(newOrder);
-			result.put("success", "success");
+		} else {
+			response = new JsonResponse(false, "Invalid token", null);
 		}
-		catch(Exception e)
-		{
-			result.put("Error","Could not save order");
-		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(result);
-		
+		return response;
 	}
 }
