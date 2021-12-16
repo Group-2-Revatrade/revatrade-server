@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.revatrade.model.User;
 import com.revature.revatrade.service.UserService;
 import com.revature.revatrade.service.JwtService;
+import com.revature.revatrade.model.JsonResponse;
 
 import io.jsonwebtoken.Claims;
 
@@ -28,13 +29,16 @@ public class JwtController {
 	private UserService userService;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> userLogin(@RequestBody User user) {
+		public JsonResponse userLogin(@RequestBody User user) {
+		JsonResponse response;
 		user = this.userService.findUserByUsernameAndPassword(user.getUsername(), user.getPassword());
 		if(user != null) {
 			String jwt = JwtService.createJWT(UUID.randomUUID().toString(), "Revatrade", String.valueOf(user.getUserId()), 6000000L);
-			return new ResponseEntity<String>("{\"jwt\":\"" + jwt + "\"}", HttpStatus.OK);
+			response = new JsonResponse(true, jwt, null);
+		} else {
+			response = new JsonResponse(false, "Invalid Username and/or Password", null);
 		}
-		return null;
+		return response;
 	}
 
 	@GetMapping("/authenticate")
