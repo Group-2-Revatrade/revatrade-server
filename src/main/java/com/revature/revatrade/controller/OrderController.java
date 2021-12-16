@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.revature.revatrade.model.Order;
 import com.revature.revatrade.service.OrderService;
+import com.revature.revatrade.service.JwtService;
 
 @RestController("orderController")
 @RequestMapping("/order")
@@ -24,25 +25,22 @@ public class OrderController {
 	}
 
 	@PostMapping(path="/new")
-	public JsonResponse saveOrder(@RequestHeader("Authorization") String jwt, @RequestBody Order order)
+	public JsonResponse saveOrder(@RequestBody Order order, @RequestHeader("Authorization") String jwt)
 	{
 		JsonResponse response;
-		// Get JWT token
-		Claims claim = jwtService.decodeJWT(jwt);
-		// Validating the token is authentic to our application
-		if(claim.getIssuer().equals("Revatrade")) {
-			// Get the user id from the jwt token
-			Integer userId = Integer.parseInt(claim.getSubject());
-			// Attempting to save order
-			Order savedOrder = this.orderService.save(order, userId);
-			if(savedOrder != null) {
-				response = new JsonResponse(true, "Order successfully placed", savedOrder);
-			} else {
-				response = new JsonResponse(false, "An error occurred, order was not placed", null);
-			}
-		} else {
-			response = new JsonResponse(false, "Invalid token", null);
-		}
+    try {
+      // Get JWT token
+      int userId = Integer.valueOf((String)JwtService.decodeJWT(jwt).get("sub"));
+      // Attempting to save order
+      Order savedOrder = this.orderService.save(order, userId);
+      if(savedOrder != null) {
+        response = new JsonResponse(true, "Order successfully placed", savedOrder);
+      } else {
+        response = new JsonResponse(false, "An error occurred, order was not placed", null);
+      }
+    }catch(io.jsonwebtoken.MalformedJwtException e) {
+      response = new JsonResponse(false, "Invalid token", null);
+    }
 		return response;
 	}
 }
