@@ -58,20 +58,20 @@ public class UserController {
 	}
 
 
-	@ExceptionHandler({MethodArgumentNotValidException.class})
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	GenericInvalidMessage handleValidationException(MethodArgumentNotValidException exception, HttpServletRequest request){
-		GenericInvalidMessage invalidMessage = new GenericInvalidMessage(400, "Validation error", request.getServletPath());
-
-		BindingResult result = exception.getBindingResult();
-
-		Map<String, String> validationErrors = new HashMap<>();
-
-		for(FieldError fieldError: result.getFieldErrors()){
-				validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-		}
-		invalidMessage.setValidationErrors(validationErrors);
-
-		return  invalidMessage;
-	}
+//	@ExceptionHandler({MethodArgumentNotValidException.class})
+//	@ResponseStatus(HttpStatus.BAD_REQUEST)
+//	GenericInvalidMessage handleValidationException(MethodArgumentNotValidException exception, HttpServletRequest request){
+//		GenericInvalidMessage invalidMessage = new GenericInvalidMessage(400, "Validation error", request.getServletPath());
+//
+//		BindingResult result = exception.getBindingResult();
+//
+//		Map<String, String> validationErrors = new HashMap<>();
+//
+//		for(FieldError fieldError: result.getFieldErrors()){
+//				validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+//		}
+//		invalidMessage.setValidationErrors(validationErrors);
+//
+//		return  invalidMessage;
+//	}
 }
