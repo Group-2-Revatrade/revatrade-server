@@ -31,6 +31,7 @@ public class ShoppingCartService {
     } //verified
 
     public List<OrderDetails> findAll() {
+        System.out.println("Service Activated");
         return this.cartDao.findAll();
     } //verified
 

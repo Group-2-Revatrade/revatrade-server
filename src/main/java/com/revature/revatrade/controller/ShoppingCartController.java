@@ -27,6 +27,7 @@ public class ShoppingCartController {
 
     @GetMapping(path="/all", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<OrderDetails>> findAll(){
+        System.out.println("Controller Activated");
         return new ResponseEntity<List<OrderDetails>>(this.cartService.findAll(), HttpStatus.OK);
     }
 

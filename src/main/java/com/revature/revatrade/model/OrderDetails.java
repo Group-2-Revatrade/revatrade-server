@@ -26,8 +26,8 @@ public class OrderDetails {
     private Product product; //may substitute for Product-Id, and pull the additional data in the front end
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private User user;
-    private String userId;
-    private String productId;
+    private Integer userId;
+    private Integer productId;
 
 
 }
