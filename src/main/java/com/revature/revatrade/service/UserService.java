@@ -22,13 +22,42 @@ public class UserService {
   }
 
   public User saveUser(User user){
-      user.setPassword(passwordEncoder.encode(user.getPassword()));
+      // user.setPassword(passwordEncoder.encode(user.getPassword()));
       return userDao.save(user);
   }
 
-  public User searchByUsername(String username){
+  public User searchUserByUsername(String username){
       User inDB = userDao.findUserByUsername(username);
       
       return inDB;
+  }
+
+
+    public User searchUserByUserId(Integer id){
+        User inDB = userDao.findUserByUserId(id);
+        return inDB;
+    }
+
+    public Integer searchUserIdByUsername(String username){
+        User inDB = userDao.findUserByUsername(username);
+        return inDB.getProfileId();
+    }
+
+    public Integer searchProfileIdByUsername(String username){
+        Integer profileId = userDao.findUserByUsername(username).getProfileId();
+        return profileId;
+    }
+
+    public User updateUser(User user){
+      return userDao.saveAndFlush(user);
+    }
+
+  public User findUserByUsernameAndPassword(String username, String password) {
+    User user = this.userDao.findUserByUsernameAndPassword(username, password);
+    if (user == null) {
+      return null; 
+    } else {
+      return user;
+    }
   }
 }

@@ -1,6 +1,5 @@
 package com.revature.revatrade.service;
 
-import com.revature.revatrade.model.User;
 import com.revature.revatrade.model.UserProfile;
 import com.revature.revatrade.repository.UserProfileDao;
 
@@ -25,8 +24,17 @@ public class UserProfileService {
     }
 
     public UserProfile getProfileById(Integer profileId) {
-        return profileDao.findById(profileId).get();
+        if(profileDao.findById(profileId).isPresent()){
+            return profileDao.findById(profileId).get();
+
+        }else {
+            return null;
+        }
+
     }
+//    public UserProfile getProfileByUserId(Integer userId) {
+//        return profileDao.findById(userId).get();
+//    }
 
     public UserProfile updateProfile(UserProfile profile) {
     

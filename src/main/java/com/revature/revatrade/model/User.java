@@ -6,7 +6,6 @@ import com.revature.revatrade.shared.validation.UniqueUsername;
 import com.revature.revatrade.shared.validation.Views;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -16,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -26,24 +24,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer userId;
-    @NotNull(message = "Username is required")
-    @UniqueUsername
-    @JsonView(Views.Base.class)
+    @Column(unique = true, nullable = false)
     private String username;
-    @NotNull(message = "Email is required")
-    @Email
-    @UniqueEmail
-    @JsonView(Views.Base.class)
+    @Column(unique = true, nullable = false)
     private String email;
-    @NotNull(message = "Password is required")
-    @Size(min = 5, message = "Password must be minimum 5 characters long")
-    private String password;
-    //    @NotNull
     @Column(nullable = false)
-    @JsonView(Views.Base.class)
+    private String password;
+    @Column(nullable = false)
     private String userType;
     @Column(nullable = true)
     private Integer profileId;
-
-
 }

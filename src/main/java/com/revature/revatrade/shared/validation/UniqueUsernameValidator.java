@@ -14,6 +14,7 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        System.out.println("Line 17: " + value);
         User userDB = userDao.findUserByUsername(value);
         if(userDB == null){
             return true;
