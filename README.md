@@ -19,7 +19,6 @@ https://github.com/Group-2-Revatrade/revatrade-client
 * Java 1.8
 * Spring Framework
     - Spring Boot
-    - Spring Security
     - Spring Milestones
     - Spring Snapshots
 * H2 Database
