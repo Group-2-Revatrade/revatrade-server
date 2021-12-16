@@ -27,6 +27,7 @@ public class OrderDetails {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private User user;
     private String userId;
+    private String productId;
 
 
 }
