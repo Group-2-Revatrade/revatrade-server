@@ -28,6 +28,7 @@ public class OrderDetails {
     private User user;
     private Integer userId;
     private Integer productId;
+    private boolean trxComplete;
 
 
 }
