@@ -34,7 +34,7 @@ public class JwtController {
 		user = this.userService.findUserByUsernameAndPassword(user.getUsername(), user.getPassword());
 		if(user != null) {
 			String jwt = JwtService.createJWT(UUID.randomUUID().toString(), "Revatrade", String.valueOf(user.getUserId()), 6000000L);
-			response = new JsonResponse(true, jwt, null);
+			response = new JsonResponse(true, jwt, user.getUserId());
 		} else {
 			response = new JsonResponse(false, "Invalid Username and/or Password", null);
 		}
