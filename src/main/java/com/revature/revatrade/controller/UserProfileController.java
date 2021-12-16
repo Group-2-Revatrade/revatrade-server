@@ -91,20 +91,16 @@ public class UserProfileController {
         }
     }
 
-
-    @GetMapping("/{username}/profile/{id}")
-    public UserProfile getUserProfileById(@PathVariable("username") String username,@PathVariable("id") Integer profileId){
+    @GetMapping("/profile/{id}")
+    public JsonResponse getUserProfileById(@PathVariable("id") Integer profileId){
         UserProfile userProfile = new UserProfile();
         UserProfile profile = profileService.getProfileById(profileId);
 
         if(profile != null){
             profile.getUser().setPassword(null);
-            return profile;
+            return new JsonResponse(true, "User profile get", profile);
         }else{
-            User inDBUser = userService.searchUserByUsername(username);
-            userProfile.setUser(inDBUser);
-            userProfile.getUser().setPassword(null);
-            return userProfile;
+            return new JsonResponse(false, "No user profile found", null);
         }
     }
 
